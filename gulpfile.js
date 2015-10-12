@@ -1,5 +1,3 @@
-///* eslint no-var:0, one-var: 0 */
-
 var gulp = require('gulp'),
     bump = require('gulp-bump'),
     git = require('gulp-git'),
