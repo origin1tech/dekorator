@@ -67,10 +67,10 @@ gulp.task('pub', function(cb) {
 gulp.task('commit:local', ['commit']);
 
 // Bump project then commit & push.
-gulp.task('commit:remote', [ 'bump', 'commit', 'push']);
+gulp.task('commit:remote', [ 'bump', 'docs', 'commit', 'push']);
 
 // Publish to NPM after commit.
-gulp.task('commit:publish', [ 'bump', 'commit', 'push', 'pub']);
+gulp.task('commit:publish', [ 'bump', 'docs', 'commit', 'push', 'pub']);
 
 // Builds out documentation.
 gulp.task('docs', function (cb) {
