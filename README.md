@@ -1,5 +1,7 @@
 # Dekorator
 
+[![wercker status](https://app.wercker.com/status/5aa3d785a8e99ed8322da7e7df56fad5/m "wercker status")](https://app.wercker.com/project/bykey/5aa3d785a8e99ed8322da7e7df56fad5)
+
 Simple dependency injection lib exposing inject and singleton decorators. Dekorator can be used with Node or in browser with an ES6 transpiler such as (Babel)[https://babeljs.io/].
 
 Dekorator is an extremely stripped down dependency injection library. It is meant to provide a lightweight solution for embedding into other libraries. If you are looking for a robust solution with lots of features this isn't it. It has a very specific use case. This doesn't mean it won't work exactly as indicated but rather you may need additional features it does not provide.
