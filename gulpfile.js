@@ -5,7 +5,7 @@ var fs = require('fs'),
     gutil = require('gulp-util'),
     groc = require('groc'),
     spawn = require('child_process').spawn,
-    pargv = require('./lib/index'),
+    pargv = require('pargv'),
     pargs = pargv.parse();
 
 // Common handler for gulp errors.
@@ -67,7 +67,7 @@ gulp.task('pub', function(cb) {
 gulp.task('commit:local', ['commit']);
 
 // Bump project then commit & push.
-gulp.task('commit:remote', ['bump', 'commit', 'push']);
+gulp.task('commit:remote', [ 'bump', 'commit', 'push']);
 
 // Publish to NPM after commit.
 gulp.task('commit:publish', [ 'bump', 'commit', 'push', 'pub']);

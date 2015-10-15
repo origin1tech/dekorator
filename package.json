@@ -1,6 +1,6 @@
 {
   "name": "dekorator",
-  "version": "0.1.33",
+  "version": "0.1.35",
   "description": "Ultra light weight dependency injection library using ES7 (2016) decorators.",
   "main": "lib/index.js",
   "scripts": {
