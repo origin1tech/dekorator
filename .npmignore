@@ -1,5 +1,8 @@
 test/*
-.babelrc
-.eslintignore
-.eslintrc
+docs/*
+jspm_packages/*
+jspm.config.js
 gulpfile.js
+groc.json
+wercker.yml
+.idea

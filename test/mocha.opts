@@ -1,2 +1,2 @@
-./test/*.js
---compilers js:babel/register
+./test/*.ts
+--compilers js:ts-node/register
