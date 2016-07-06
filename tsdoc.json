@@ -1,0 +1,37 @@
+{
+	"tags":
+	{
+		"allowUnknownTags" : true
+	},
+	"plugins":[
+		 "plugins/markdown"
+		,"/usr/local/lib/node_modules/tsdoc/template/plugins/TSDoc.js"
+	],
+	"opts":
+	{
+		"template"	:"/usr/local/lib/node_modules/tsdoc/template",
+		"recurse"	:"true"
+	},
+	"templates" : {
+		"cleverLinks"     : false,
+		"monospaceLinks"  : false
+	},
+	"source":
+	{
+		"includePattern": "(\\.d)?\\.ts$"
+	},
+	"markdown"  : {
+		"parser"   : "gfm",
+		"hardwrap" : true
+	},
+	"tsdoc":{
+		"source"		:"/Volumes/DATA/Projects/WebNode/utilities/dekorator/src",
+		"destination"	:"/Volumes/DATA/Projects/WebNode/utilities/dekorator/docs",
+		"tutorials"		:"",
+		"systemName"	: "dekorator",
+		"footer"		: "",
+		"copyright"		: "dekorator Copyright © 2016 Origin1 Technologies.",
+		"outputSourceFiles" : true,
+		"commentsOnly": true
+	}
+}

@@ -1,15 +1,19 @@
 'use strict';
 
 let fs = require('fs'),
+    EOL = require('os').EOL,
     gulp = require('gulp'),
     bump = require('gulp-bump'),
     git = require('gulp-git'),
     gutil = require('gulp-util'),
-    ts = require('gulp-typescript'),
     spawn = require('child_process').spawn,
-    pargv = require('pargv'),
+    pargv = require('pargv').configure(3),
     shelljs = require('shelljs'),
-    pargs = pargv.parse();
+    run = require('run-sequence'),
+    del = require('del');
+
+let pargs = pargv.parse();
+
 
 // Common handler for gulp errors.
 function handleError(err) {
@@ -37,12 +41,17 @@ function commit() {
 
 }
 
+// Clean dist
+gulp.task('clean', (cb) => {
+    return del('dist/**/*.*', cb);
+});
+
 // Compile typescript.
 gulp.task('ts', (cb) => {
 
     shelljs.exec('tsc', (err, stdout, stderr) => {
         if(err)
-            return handleError();
+            return handleError(err);
         if (stdout)
             console.log('[Typescript]: ' + stdout);
         if (stderr)
@@ -53,32 +62,26 @@ gulp.task('ts', (cb) => {
 
 });
 
-// Nothing special just copy src file(s).
-gulp.task('copy', () => {
-    return gulp.src('./src/index.ts')
-        .pipe(gulp.dest('./dist'));
-});
+gulp.task('mocha', (cb) => {
 
-gulp.task('test', (cb) => {
-    shelljs.exec('npm test', (err, stdout, stderr) => {
+    if (pargs.cmd !== 'commit:remote' && pargs.cmd !== 'commit:publish')
+        return cb();
+
+    shelljs.exec('mocha', (err, stdout, stderr) => {
         if(err)
             handleError(err);
         if (stdout)
-            console.log('[Test]: ' + stdout);
-        if (stderr)
-            console.log('[Test]: ' + stdout);
+            console.log('[mocha]: ' + stdout);
     }).on('exit', (code) => {
         cb();
     });
 
 });
 
-gulp.task('build', ['ts', 'copy']);
-
 // Bumps the project's version.
 gulp.task('bump', (cb) => {
 
-    if (pargs.cmd === 'commit:local')
+    if (pargs.cmd !== 'commit:remote' && pargs.cmd !== 'commit:publish')
         return cb();
 
     return gulp.src(['./package.json'])
@@ -87,8 +90,15 @@ gulp.task('bump', (cb) => {
 
 });
 
+gulp.task('build', (cb) => {
+    let seq = ['clean', 'ts'];
+    if (pargs.cmd === 'commit:remote' && pargs.cmd === 'commit:publish')
+        seq = seq.concat(['mocha', 'bump']);
+    return run(seq, cb);
+});
+
 // Remote commit.
-gulp.task('commit', commit);
+gulp.task('commit', ['build']);
 
 // Push commit(s) to remote repo.
 gulp.task('push', (cb) => {
@@ -110,7 +120,7 @@ gulp.task('pub', (cb) => {
 gulp.task('commit:local', ['commit']);
 
 // Bump project then commit & push.
-gulp.task('commit:remote', ['bump', 'commit', 'push']);
+gulp.task('commit:remote', ['commit', 'push']);
 
 // Publish to NPM after commit.
-gulp.task('commit:publish', ['bump', 'commit', 'push', 'pub']);
+gulp.task('commit:publish', ['commit', 'push', 'pub']);

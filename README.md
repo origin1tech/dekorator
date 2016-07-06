@@ -33,7 +33,10 @@ Using **dekorator** is very simple. You need merely decorate an ES6 class to hav
 #### Injecting
 
 ```js
-import {inject, invoke} from 'origin1tech/dekorator'; // shown using System.js
+// NOTE: import below shown using System.js if you
+// reference typings (dist/index.d.ts) you can import
+// as ... from 'dekorator';
+import {inject, invoke} from 'origin1tech/dekorator';
 
 class Vehicle {
 	constructor() {
@@ -96,4 +99,4 @@ npm test
 
 Basically you can do just about anything you like. Enjoy!
 
-See (LICENSE.md)[license.md]
+See LICENSE.md
